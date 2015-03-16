@@ -26,6 +26,8 @@
     "gulp-react": "*",
     "gulp-rename": "*",
     "reactify": "*",
+    "react": "*",
+    "socket.io-client": "*",
     "jquery": "*"
   },
   "dependencies": {
@@ -33,6 +35,7 @@
     "express": "*",
     "body-parser": "*",
     "morgan": "*",
-    "react": "*"
+    "highland": "*",
+    "socket.io": "*"
   }
 }
