@@ -4,7 +4,7 @@
   "description": "Basic Chat Implementation",
   "main": "lib/index.js",
   "scripts": {
-    "start": "nodemon --ignore node_modules/ ./scripts/server.js"
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
@@ -23,12 +23,16 @@
     "gulp-nodemon": "*",
     "gulp-jshint": "*",
     "del": "*",
-    "gulp-rename": "*"
+    "gulp-react": "*",
+    "gulp-rename": "*",
+    "reactify": "*",
+    "jquery": "*"
   },
   "dependencies": {
     "jade": "*",
     "express": "*",
     "body-parser": "*",
-    "morgan": "*"
+    "morgan": "*",
+    "react": "*"
   }
 }
