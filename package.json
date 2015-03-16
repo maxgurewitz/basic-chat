@@ -1,0 +1,34 @@
+{
+  "name": "basic-chat",
+  "version": "1.0.0",
+  "description": "Basic Chat Implementation",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "nodemon --ignore node_modules/ ./scripts/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maxgurewitz/basic-chat.git"
+  },
+  "author": "Max Gurewitz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxgurewitz/basic-chat/issues"
+  },
+  "homepage": "https://github.com/maxgurewitz/basic-chat",
+  "devDependencies": {
+    "gulp": "*", 
+    "gulp-uglify": "*",
+    "gulp-browserify": "*",
+    "gulp-nodemon": "*",
+    "gulp-jshint": "*",
+    "del": "*",
+    "gulp-rename": "*"
+  },
+  "dependencies": {
+    "jade": "*",
+    "express": "*",
+    "body-parser": "*",
+    "morgan": "*"
+  }
+}
