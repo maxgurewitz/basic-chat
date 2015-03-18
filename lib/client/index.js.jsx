@@ -31,6 +31,11 @@ var ChatRoom = React.createClass({
       });
   },
 
+  componentDidUpdate: function() {
+    var node = $('#js-message-list');
+    node.scrollTop(node[0].scrollHeight);
+  },
+
   render: function () {
     var messages = this.state.messages.map(function (msg, i) {
       var className = 'message' + (i % 2 === 0 ? ' dark' : ' light');
@@ -39,12 +44,12 @@ var ChatRoom = React.createClass({
 
     return (
       <div className='chat-room'>
-        <div className = 'message-list' >
+        <div className = 'message-list' id = 'js-message-list'>
           { messages }
         </div>
         <div className = 'message-input' >
-          <input type='text' id='js-message'></input>
-          <button id='js-send-message' className = 'btn btn-default'> Send </button>
+          <input type = 'text' id = 'js-message'></input>
+          <button id = 'js-send-message' className = 'btn btn-default'> Send </button>
         </div>
       </div>
     );

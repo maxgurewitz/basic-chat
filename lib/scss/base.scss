@@ -1,13 +1,19 @@
 @import 'bootstrap';
 
-$row-height: 40px;
 $row-padding: 10px;
 $color-lighter-blue:  #E9F6FC;
+$room-height: 300px;
+$row-height: $room-height/6;
 
 .chat-room {
   width: 700px;
-  height: 300px;
+  height: $room-height;
   position: relative;
+}
+
+.message-list {
+  overflow: scroll;
+  height: $row-height * 5;
 }
 
 .message {
