@@ -51,11 +51,12 @@ var ChatRoom = React.createClass({
 
     return (
       <div className='chat-room'>
-        <div className = 'message-list' id = 'js-message-list'>
+        <h1> Basic Chat </h1>
+        <div className = 'message-list well' id = 'js-message-list'>
           { messages }
         </div>
         <div className = 'message-input' >
-          <input type = 'text' id = 'js-message'></input>
+          <input className = 'well' type = 'text' id = 'js-message'></input>
           <button id = 'js-send-message' className = 'btn btn-default'> Send </button>
         </div>
       </div>
@@ -63,7 +64,8 @@ var ChatRoom = React.createClass({
   }
 });
 
-React.render(<ChatRoom />, $('#content')[0]);
+React.render(<ChatRoom />, $('#js-content')[0]);
+      
 
 function symbolizeBadWords (msg) {
   var badWords = ['fook', 'shot']

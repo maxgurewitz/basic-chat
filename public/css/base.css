@@ -4903,10 +4903,19 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
+.content {
+  margin: 0 auto; }
+
 .chat-room {
+  margin: 50px auto;
   width: 700px;
-  height: 300px;
+  height: 350px;
   position: relative; }
+
+h1 {
+  box-sizing: border-box;
+  height: 50px;
+  margin: 0; }
 
 .message-list {
   overflow: scroll;
@@ -4916,13 +4925,15 @@ button.close {
   box-sizing: border-box;
   height: 50px;
   line-height: 25px;
-  padding: 10px; }
+  padding: 10px;
+  border-radius: 4px; }
   .message.dark {
-    background-color: #E9F6FC; }
+    background-color: #9bd6f2; }
 
 .message-input {
   box-sizing: border-box;
   height: 50px;
+  padding-top: 2px;
   width: 100%;
   position: absolute;
   bottom: 0; }

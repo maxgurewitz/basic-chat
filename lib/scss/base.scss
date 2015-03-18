@@ -1,14 +1,25 @@
 @import 'bootstrap';
 
 $row-padding: 10px;
-$color-lighter-blue:  #E9F6FC;
-$room-height: 300px;
-$row-height: $room-height/6;
+$color-lighter-blue:  #9bd6f2;
+$room-height: 350px;
+$row-height: $room-height/7;
+
+.content {
+  margin: 0 auto;
+}
 
 .chat-room {
+  margin: 50px auto;
   width: 700px;
   height: $room-height;
   position: relative;
+}
+
+h1 {
+  box-sizing: border-box;
+  height: $row-height;
+  margin: 0;
 }
 
 .message-list {
@@ -21,6 +32,7 @@ $row-height: $room-height/6;
   height: $row-height;
   line-height: $row-height/2;
   padding: $row-padding;
+  border-radius: 4px;
 
   &.dark {
     background-color: $color-lighter-blue;
@@ -30,6 +42,7 @@ $row-height: $room-height/6;
 .message-input {
   box-sizing: border-box;
   height: $row-height;
+  padding-top: 2px;
   width: 100%;
   position: absolute;
   bottom: 0;
