@@ -6,6 +6,17 @@ var React = require('react');
 var hl = require('highland');
 var io = require('socket.io-client');
 
+var badWords = ['fook', 'shot']
+  .map(function (word) {
+    return new RegExp(word, 'g');
+  });
+
+function symbolizeBadWords (msg) {
+  return badWords.reduce(function (filtered, rgx) {
+    return filtered.replace(rgx, '*$#!%^*');
+  }, msg);
+}
+
 var ChatRoom = React.createClass({
 
   getInitialState: function () {
@@ -16,19 +27,24 @@ var ChatRoom = React.createClass({
     var socket = io();
     var self = this;
 
-    hl('click', $('#js-send-message'))
+    var enterPresses = hl('keypress', $('#js-message'))
+      .filter(function (e) {
+        return e.keyCode === 13;
+      });
+
+    var clicks = hl('click', $('#js-send-message'));
+
+    hl([enterPresses, clicks])
+      .merge()
       .map(function () {
         return $('#js-message').val();
       })
-      .map(function (msg) {
-        return _.trim(msg);
-      })
       .filter(function (msg) {
-        return !_.isEmpty(msg);
+        return !_.isEmpty(_.trim(msg));
       })
       .each(function (msg) {
         socket.emit('msg', msg);
-        return $('#js-message').val('');
+        $('#js-message').val('');
       });
 
     hl('msg', socket)
@@ -65,15 +81,3 @@ var ChatRoom = React.createClass({
 });
 
 React.render(<ChatRoom />, $('#js-content')[0]);
-      
-
-function symbolizeBadWords (msg) {
-  var badWords = ['fook', 'shot']
-    .map(function (word) {
-      return new RegExp(word, 'g');
-    });
-
-  return badWords.reduce(function (filtered, rgx) {
-    return filtered.replace(rgx, '*$#!%^*');
-  }, msg);
-}

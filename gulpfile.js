@@ -26,15 +26,15 @@ gulp.task('cleanCSS', function(cb) {
 });
 
 gulp.task('sass', ['cleanCSS'], function () {
-    gulp.src(paths.scss)
-      .pipe(sass({ 
-        errLogToConsole: true,
-        style: 'compressed',
-        includePaths: [
-          './bower_components/bootstrap-sass/assets/stylesheets/'
-        ]
-      }))
-      .pipe(gulp.dest(paths.cssDist));
+  gulp.src(paths.scss)
+    .pipe(sass({ 
+      errLogToConsole: true,
+      style: 'compressed',
+      includePaths: [
+        './bower_components/bootstrap-sass/assets/stylesheets/'
+      ]
+    }))
+    .pipe(gulp.dest(paths.cssDist));
 });
  
 gulp.task('client', ['cleanJS'], function() {
