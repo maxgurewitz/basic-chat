@@ -1,0 +1,41 @@
+@import 'bootstrap';
+
+$row-height: 40px;
+$row-padding: 10px;
+$color-lighter-blue:  #E9F6FC;
+
+.chat-room {
+  width: 700px;
+  height: 300px;
+  position: relative;
+}
+
+.message {
+  box-sizing: border-box;
+  height: $row-height;
+  line-height: $row-height/2;
+  padding: $row-padding;
+
+  &.dark {
+    background-color: $color-lighter-blue;
+  }
+}
+
+.message-input {
+  box-sizing: border-box;
+  height: $row-height;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+
+  input {
+    padding: $row-padding;
+    height: 100%;
+    width: 80%;
+  }
+
+  button {
+    height: 100%;
+    width: 20%;
+  }
+}

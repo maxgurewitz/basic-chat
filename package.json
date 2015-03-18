@@ -24,11 +24,14 @@
     "gulp-jshint": "*",
     "del": "*",
     "gulp-react": "*",
+    "gulp-sass": "*",
     "gulp-rename": "*",
     "reactify": "*",
     "react": "*",
     "socket.io-client": "*",
-    "jquery": "*"
+    "gulp-gzip": "*",
+    "jquery": "*",
+    "debowerify": "*"
   },
   "dependencies": {
     "jade": "*",

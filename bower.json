@@ -1,0 +1,14 @@
+{
+  "name": "basic-chat",
+  "version": "0.0.0",
+  "homepage": "https://github.com/maxgurewitz/basic-chat",
+  "authors": [
+    "Maxwell Gurewitz <maxthegeek1@gmail.com>"
+  ],
+  "description": "Basic Chat",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap-sass": "*",
+    "jquery": "*"
+  }
+}

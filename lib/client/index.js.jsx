@@ -1,12 +1,16 @@
 window.$ = require('jquery');
+window.JQuery = require('jquery');
+
 var React = require('react');
 var hl = require('highland');
 var io = require('socket.io-client');
 
 var ChatRoom = React.createClass({
+
   getInitialState: function () {
-    return { messages: [] }
+    return { messages: [] };
   },
+
   componentDidMount: function () {
     var socket = io();
     var self = this;
@@ -21,24 +25,41 @@ var ChatRoom = React.createClass({
       });
 
     hl('msg', socket)
+      .map(symbolizeBadWords)
       .each(function (msg) {
         self.setState({ messages: self.state.messages.concat([msg]) });
       });
   },
-  render: function () {
 
-    var messages = this.state.messages.map(function (msg) {
-      return (<p> { msg } </p>);
+  render: function () {
+    var messages = this.state.messages.map(function (msg, i) {
+      var className = 'message' + (i % 2 === 0 ? ' dark' : ' light');
+      return (<div className = { className } > { msg } </div>);
     });
 
     return (
       <div className='chat-room'>
-        { messages }
-        <input type='text' id='js-message'></input>
-        <button id='js-send-message'> Send </button>
+        <div className = 'message-list' >
+          { messages }
+        </div>
+        <div className = 'message-input' >
+          <input type='text' id='js-message'></input>
+          <button id='js-send-message' className = 'btn btn-default'> Send </button>
+        </div>
       </div>
     );
   }
 });
 
-React.render(<ChatRoom />, $('#content')[0])
+React.render(<ChatRoom />, $('#content')[0]);
+
+function symbolizeBadWords (msg) {
+  var badWords = ['fook', 'shot']
+    .map(function (word) {
+      return new RegExp(word, 'g');
+    });
+
+  return badWords.reduce(function (filtered, rgx) {
+    return filtered.replace(rgx, '*$#!%^*');
+  }, msg);
+}
