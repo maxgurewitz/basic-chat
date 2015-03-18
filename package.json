@@ -34,6 +34,7 @@
     "debowerify": "*"
   },
   "dependencies": {
+    "lodash": "*",
     "jade": "*",
     "express": "*",
     "body-parser": "*",

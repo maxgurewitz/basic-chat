@@ -1,5 +1,6 @@
 window.$ = require('jquery');
 window.JQuery = require('jquery');
+window._ = require('lodash');
 
 var React = require('react');
 var hl = require('highland');
@@ -18,6 +19,12 @@ var ChatRoom = React.createClass({
     hl('click', $('#js-send-message'))
       .map(function () {
         return $('#js-message').val();
+      })
+      .map(function (msg) {
+        return _.trim(msg);
+      })
+      .filter(function (msg) {
+        return !_.isEmpty(msg);
       })
       .each(function (msg) {
         socket.emit('msg', msg);
