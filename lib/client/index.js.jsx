@@ -21,10 +21,22 @@ var ChatRoom = React.createClass({
     var socket = io();
     var self = this;
 
-    hl('click', $('#js-send-message'))
+    var enterPresses = hl('keypress', $('#js-message'))
+      .filter(function (e) {
+        return e.keyCode === 13;
+      });
+
+    var clicks = hl('click', $('#js-send-message'));
+
+    hl([enterPresses, clicks])
+      .merge()
+      .throttle(300)
       .map(function () {
         return { message: $('#js-message').val(), isMessage: true };
       })
+      .filter(isNotBlank)
+      .map(symbolizeCurseWords)
+      .through(animateMe)
       .each(function (msg) {
         socket.emit('msg', msg);
         $('#js-message').val('');
@@ -73,86 +85,75 @@ var ChatRoom = React.createClass({
 
 React.render(<ChatRoom />, $('#js-content')[0]);
 
-// var enterPresses = hl('keypress', $('#js-message'))
-//   .filter(function (e) {
-//     return e.keyCode === 13;
-//   });
+function isNotBlank (msg) {
+  return !_.isEmpty(_.trim(msg.message));
+}
 
-// var clicks = hl('click', $('#js-send-message'));
+window.simulateFastTyper = function (times) {
+  _.times(times, function () {
+    $('#js-message').val('gotta type fast');
+    $('#js-send-message').click();
+  });
+}
 
-// hl([enterPresses, clicks])
-//   .merge()
-//   .throttle(300)
+function symbolizeCurseWords (msg) {
+  var message = curseWords.reduce(function (filtered, rgx) {
+    return filtered.replace(rgx, '*$#!%^*');
+  }, msg.message);
 
-// function isNotBlank (msg) {
-//   return !_.isEmpty(_.trim(msg.message));
-// }
-
-// window.simulateFastTyper = function (times) {
-//   _.times(times, function () {
-//     $('#js-message').val('gotta type fast');
-//     $('#js-send-message').click();
-//   });
-// }
-
-// function symbolizeCurseWords (msg) {
-//   var message = curseWords.reduce(function (filtered, rgx) {
-//     return filtered.replace(rgx, '*$#!%^*');
-//   }, msg.message);
-
-//   msg.message = message;
-//   return msg;
-// } 
+  msg.message = message;
+  return msg;
+} 
 
          
-// function animateMe (stream) {
+function animateMe (stream) {
 
-//     var streamWithQueries = stream.map(function (msg) {
-//       var match = msg.message.match(/animate( me)? (.*)/i);
-//       if(!match) { return msg; }
-//       return [msg, { query: match[2], isQuery: true }];
-//     }).flatten();
+    var streamWithQueries = stream.map(function (msg) {
+      var match = msg.message.match(/animate( me)? (.*)/i);
+      if(!match) { return msg; }
+      return [msg, { query: match[2], isQuery: true }];
+    }).flatten();
 
-//     var imageStream = streamWithQueries
-//       .where({ isQuery: true })
-//       .map(function (queryObj) {
-//         return googleImages(queryObj.query);
-//       })
-//       .series()
-//       .map(function (results) {
-//         var result = _.sample(results);
-//         return { src: result.src, isImage: true };
-//       });
+    var imageStream = streamWithQueries
+      .where({ isQuery: true })
+      .map(function (queryObj) {
+        return googleImages(queryObj.query);
+      })
+      .series()
+      .map(function (results) {
+        var result = _.sample(results);
+        return { src: result.src, isImage: true };
+      });
       
-//     var messageStream = streamWithQueries
-//       .fork()
-//       .filter(function (msg) { return !msg.isQuery })
+    var messageStream = streamWithQueries
+      .fork()
+      .filter(function (msg) { return !msg.isQuery })
 
-//     return hl([messageStream, imageStream]).merge();
-// }
+    return hl([messageStream, imageStream]).merge();
+}
 
-// function googleImages (query) {
+function googleImages (query) {
 
-//   var params = {
-//     v: '1.0',
-//     q: query,
-//     start: '1',
-//     safe: 'active',
-//     imgtype: 'animated',
-//     rsz: '8' 
-//   };
+  var params = {
+    v: '1.0',
+    q: query,
+    start: '1',
+    safe: 'active',
+    imgtype: 'animated',
+    rsz: '8' 
+  };
 
-//   return hl($.ajax({
-//     url: 'http://ajax.googleapis.com/ajax/services/search/images?' + $.param(params),
-//     dataType: 'jsonp',
-//     method: 'GET'
-//   })).map(function (res) {
-//     var googleResults = res.responseData.results;
-//     return _.map(googleResults, function (gRes) {
-//       return { src: gRes.unescapedUrl };
-//     });
-//   });
-// }
+  return hl($.ajax({
+    url: 'http://ajax.googleapis.com/ajax/services/search/images?' + $.param(params),
+    dataType: 'jsonp',
+    method: 'GET'
+  })).map(function (res) {
+    var googleResults = res.responseData.results;
+    return _.map(googleResults, function (gRes) {
+      return { src: gRes.unescapedUrl };
+    });
+  });
+}
 
 function scrollBottom () {
   var list = $('#js-message-list');
