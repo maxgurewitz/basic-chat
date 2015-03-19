@@ -4909,30 +4909,33 @@ button.close {
 .chat-room {
   margin: 50px auto;
   width: 700px;
-  height: 350px;
+  height: 500px;
   position: relative; }
 
 h1 {
   box-sizing: border-box;
-  height: 50px;
+  height: 71.42857px;
   margin: 0; }
 
 .message-list {
   overflow: scroll;
-  height: 250px; }
+  height: 357.14286px; }
 
 .message {
   box-sizing: border-box;
-  height: 50px;
-  line-height: 25px;
+  min-height: 71.42857px;
   padding: 10px;
-  border-radius: 4px; }
+  padding-top: 25px;
+  border-radius: 4px;
+  word-break: break-word; }
   .message.dark {
     background-color: #9bd6f2; }
+  .message img {
+    max-height: 250px; }
 
 .message-input {
   box-sizing: border-box;
-  height: 50px;
+  height: 71.42857px;
   padding-top: 2px;
   width: 100%;
   position: absolute;

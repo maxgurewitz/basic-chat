@@ -2,7 +2,7 @@
 
 $row-padding: 10px;
 $color-lighter-blue:  #9bd6f2;
-$room-height: 350px;
+$room-height: 500px;
 $row-height: $room-height/7;
 
 .content {
@@ -29,13 +29,18 @@ h1 {
 
 .message {
   box-sizing: border-box;
-  height: $row-height;
-  line-height: $row-height/2;
+  min-height: $row-height;
   padding: $row-padding;
+  padding-top: $row-padding * 2.5;
   border-radius: 4px;
+  word-break: break-word;
 
   &.dark {
     background-color: $color-lighter-blue;
+  }
+
+  img {
+    max-height: $room-height * .5;
   }
 }
 
