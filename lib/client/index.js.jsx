@@ -82,9 +82,17 @@ React.render(<ChatRoom />, $('#js-content')[0]);
 
 // hl([enterPresses, clicks])
 //   .merge()
+//   .throttle(300)
 
 // function isNotBlank (msg) {
 //   return !_.isEmpty(_.trim(msg.message));
+// }
+
+// window.simulateFastTyper = function (times) {
+//   _.times(times, function () {
+//     $('#js-message').val('gotta type fast');
+//     $('#js-send-message').click();
+//   });
 // }
 
 // function symbolizeCurseWords (msg) {
@@ -96,11 +104,7 @@ React.render(<ChatRoom />, $('#js-content')[0]);
 //   return msg;
 // } 
 
-// function scrollBottom () {
-//   var list = $('#js-message-list');
-//   list.scrollTop(list[0].scrollHeight);
-// }
-          
+         
 // function animateMe (stream) {
 
 //     var streamWithQueries = stream.map(function (msg) {
@@ -149,3 +153,8 @@ React.render(<ChatRoom />, $('#js-content')[0]);
 //     });
 //   });
 // }
+
+function scrollBottom () {
+  var list = $('#js-message-list');
+  list.scrollTop(list[0].scrollHeight);
+}
