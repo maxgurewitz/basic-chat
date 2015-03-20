@@ -123,7 +123,12 @@ function animateMe (stream) {
       .map(function (results) {
         var result = _.sample(results);
         return { src: result.src, isImage: true };
+      })
+      .errors(function (e, push) {
+        push(null, { src: 'images/404.gif', isImage: true }); 
       });
+
+
       
     var messageStream = streamWithQueries
       .fork()
@@ -144,7 +149,7 @@ function googleImages (query) {
   };
 
   return hl($.ajax({
-    url: 'http://ajax.googleapis.com/ajax/services/search/images?' + $.param(params),
+    url: 'https://ajax.googleapis.com/ajax/services/search/images?' + $.param(params),
     dataType: 'jsonp',
     method: 'GET'
   })).map(function (res) {
