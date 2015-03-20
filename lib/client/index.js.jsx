@@ -94,7 +94,7 @@ window.simulateFastTyper = function (times) {
     $('#js-message').val('gotta type fast');
     $('#js-send-message').click();
   });
-}
+};
 
 function symbolizeCurseWords (msg) {
   var message = curseWords.reduce(function (filtered, rgx) {
@@ -127,7 +127,7 @@ function animateMe (stream) {
       
     var messageStream = streamWithQueries
       .fork()
-      .filter(function (msg) { return !msg.isQuery })
+      .where({ isMessage: true });
 
     return hl([messageStream, imageStream]).merge();
 }
