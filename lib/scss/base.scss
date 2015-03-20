@@ -3,7 +3,9 @@
 $row-padding: 10px;
 $color-lighter-blue:  #9bd6f2;
 $room-height: 500px;
-$row-height: $room-height/7;
+$row-height: $room-height/9;
+$message-list-padding: 19px;
+$font-size: 14px;
 
 .content {
   margin: 0 auto;
@@ -14,6 +16,7 @@ $row-height: $room-height/7;
   width: 700px;
   height: $room-height;
   position: relative;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -24,14 +27,17 @@ h1 {
 
 .message-list {
   overflow: scroll;
-  height: $row-height * 5;
+  height: $row-height * 7;
+  padding: $message-list-padding;
+  margin: 0;
 }
 
 .message {
   box-sizing: border-box;
   min-height: $row-height;
   padding: $row-padding;
-  padding-top: $row-padding * 2.5;
+  font-size: $font-size;
+  line-height: $row-height/2;
   border-radius: 4px;
   word-break: break-word;
 
@@ -47,7 +53,7 @@ h1 {
 .message-input {
   box-sizing: border-box;
   height: $row-height;
-  padding-top: 2px;
+  padding-top: 3.5px;
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -59,7 +65,8 @@ h1 {
   }
 
   button {
+    margin-left: .5%;
     height: 100%;
-    width: 20%;
+    width: 19.5%;
   }
 }

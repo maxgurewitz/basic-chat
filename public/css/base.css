@@ -4910,22 +4910,26 @@ button.close {
   margin: 50px auto;
   width: 700px;
   height: 500px;
-  position: relative; }
+  position: relative;
+  box-sizing: border-box; }
 
 h1 {
   box-sizing: border-box;
-  height: 71.42857px;
+  height: 55.55556px;
   margin: 0; }
 
 .message-list {
   overflow: scroll;
-  height: 357.14286px; }
+  height: 388.88889px;
+  padding: 19px;
+  margin: 0; }
 
 .message {
   box-sizing: border-box;
-  min-height: 71.42857px;
+  min-height: 55.55556px;
   padding: 10px;
-  padding-top: 25px;
+  font-size: 14px;
+  line-height: 27.77778px;
   border-radius: 4px;
   word-break: break-word; }
   .message.dark {
@@ -4935,8 +4939,8 @@ h1 {
 
 .message-input {
   box-sizing: border-box;
-  height: 71.42857px;
-  padding-top: 2px;
+  height: 55.55556px;
+  padding-top: 3.5px;
   width: 100%;
   position: absolute;
   bottom: 0; }
@@ -4945,5 +4949,6 @@ h1 {
     height: 100%;
     width: 80%; }
   .message-input button {
+    margin-left: .5%;
     height: 100%;
-    width: 20%; }
+    width: 19.5%; }
