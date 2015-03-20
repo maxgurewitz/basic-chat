@@ -8,6 +8,7 @@ var jshint = require('gulp-jshint');
 var react = require('gulp-react');
 var sass = require('gulp-sass');
 var gzip = require('gulp-gzip');
+var _ = require('lodash');
 
 var paths = {
   client: ['./lib/client/**/*.js', './lib/client/**/*.jsx'],
@@ -25,6 +26,13 @@ gulp.task('cleanCSS', function(cb) {
   del([paths.cssDist], cb);
 });
 
+gulp.task('compress', ['compressedClient'], function() {
+  gulp.src(paths.jsDist)
+    .pipe(uglify())
+    .pipe(gzip())
+    .pipe(gulp.dest(paths.jsDist));
+});
+
 gulp.task('sass', ['cleanCSS'], function () {
   gulp.src(paths.scss)
     .pipe(sass({ 
@@ -37,15 +45,24 @@ gulp.task('sass', ['cleanCSS'], function () {
     .pipe(gulp.dest(paths.cssDist));
 });
  
-gulp.task('client', ['cleanJS'], function() {
+function compileClientJs (brsfyOpts) {
   return gulp.src(paths.client, { read: false })
-    .pipe(browserify({ 
-      transform: ['reactify', 'debowerify'],
-      extensions: ['.jsx', '.js'],
-      debug: true,
-    }))
+    .pipe(browserify(_.extend({ 
+        transform: ['reactify', 'debowerify'],
+        extensions: ['.jsx', '.js']
+      },
+      brsfyOpts
+    )))
     .pipe(rename('app.js'))
     .pipe(gulp.dest('public/js'));
+}
+
+gulp.task('compressedClient', ['cleanJS'], function() {
+  return compileClientJs({ fullPaths: false, debug: false });
+});
+
+gulp.task('client', ['cleanJS'], function() {
+  return compileClientJs({ fullPaths: true, debug: true });
 });
  
 gulp.task('watch', function() {
