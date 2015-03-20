@@ -83,6 +83,7 @@ var ChatRoom = React.createClass({
   }
 });
 
+$('#js-loading').remove();
 React.render(<ChatRoom />, $('#js-content')[0]);
 
 function isNotBlank (msg) {
