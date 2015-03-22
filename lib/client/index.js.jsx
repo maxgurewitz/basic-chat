@@ -126,7 +126,7 @@ function animateMe (stream) {
         return { src: result.src, isImage: true };
       })
       .errors(function (e, push) {
-        push(null, { src: 'images/404.gif', isImage: true }); 
+        push(null, { src: '/images/404.gif', isImage: true }); 
       });
 
 
