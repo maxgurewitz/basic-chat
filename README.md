@@ -1,16 +1,20 @@
 # basic-chat
 
 For development,
-
 ```
-sudo npm install
+npm i && bower i
 gulp
 ```
 
-To run just it,
-
+Make sure to run,
 ```
-sudo npm install --production
+gulp compress
+```
+before committing public/js/app.js.
+
+To just run it,
+```
+npm i --production && bower i
 npm start
 ```
 

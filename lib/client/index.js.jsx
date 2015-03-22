@@ -90,13 +90,6 @@ function isNotBlank (msg) {
   return !_.isEmpty(_.trim(msg.message));
 }
 
-window.simulateFastTyper = function (times) {
-  _.times(times, function () {
-    $('#js-message').val('gotta type fast');
-    $('#js-send-message').click();
-  });
-};
-
 function symbolizeCurseWords (msg) {
   var message = curseWords.reduce(function (filtered, rgx) {
     return filtered.replace(rgx, '*$#!%^*');
@@ -104,21 +97,26 @@ function symbolizeCurseWords (msg) {
 
   msg.message = message;
   return msg;
-} 
+}
 
-         
+function msgAndQuery (msg, queryType, matchWord) {
+  var rgx = new RegExp((matchWord || queryType) + '( me)? (.*)', 'i');
+  var match = msg.message.match(rgx);
+  if (!match) { return; }
+  return [msg, {queryType: queryType, query: match[2], isQuery: true }];
+}
+
 function animateMe (stream) {
 
     var streamWithQueries = stream.map(function (msg) {
-      var match = msg.message.match(/animate( me)? (.*)/i);
-      if(!match) { return msg; }
-      return [msg, { query: match[2], isQuery: true }];
+      return msgAndQuery(msg, 'animated', 'animate') ||
+        msgAndQuery(msg, 'image') || msg;
     }).flatten();
 
     var imageStream = streamWithQueries
       .where({ isQuery: true })
       .map(function (queryObj) {
-        return googleImages(queryObj.query);
+        return googleImages(queryObj);
       })
       .series()
       .map(function (results) {
@@ -129,8 +127,6 @@ function animateMe (stream) {
         push(null, { src: '/images/404.gif', isImage: true }); 
       });
 
-
-      
     var messageStream = streamWithQueries
       .fork()
       .where({ isMessage: true });
@@ -142,11 +138,11 @@ function googleImages (query) {
 
   var params = {
     v: '1.0',
-    q: query,
+    q: query.query,
     start: '1',
     safe: 'active',
-    imgtype: 'animated',
-    rsz: '8' 
+    imgtype: query.queryType || 'animated',
+    rsz: '8'
   };
 
   return hl($.ajax({
@@ -165,3 +161,10 @@ function scrollBottom () {
   var list = $('#js-message-list');
   list.scrollTop(list[0].scrollHeight);
 }
+
+window.simulateFastTyper = function (times) {
+  _.times(times, function () {
+    $('#js-message').val('gotta type fast');
+    $('#js-send-message').click();
+  });
+};
