@@ -1,7 +1,8 @@
 window.$ = require('jquery');
-window.JQuery = require('jquery');
+window.jQuery = require('jquery');
 window._ = require('lodash');
 window.hl = require('highland');
+require('../../bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js');
 
 var React = require('react');
 var io = require('socket.io-client');
@@ -24,6 +25,11 @@ var ChatRoom = React.createClass({
   },
 
   componentDidMount: function () {
+    $('.js-info').popover({
+      html: true,
+      content: $('.js-info-content')
+    });
+    
     var socket = io();
     var self = this;
 
@@ -81,7 +87,29 @@ var ChatRoom = React.createClass({
           { messages }
         </div>
         <div className = 'message-input' >
-          <input className = 'well' type = 'text' id = 'js-message'></input>
+          <input className = 'well' type = 'text' id = 'js-message'>
+          </input>
+
+          <a tabindex = '0' role = 'button' className = 'js-info info' 
+            data-container = 'body' data-toggle = 'popover' data-placement = 'top' 
+            data-trigger = 'focus' href = 'javascript:;'>
+
+            i
+          </a>
+
+          <div className = 'js-info-content info-content'>
+            Commands:
+            <ul>
+              <li> animate me <i> query </i> </li>
+              <li> image me <i> query </i> </li>
+            </ul>
+            Source:
+            <br></br>
+            <a href = 'https://github.com/maxgurewitz/basic-chat'> 
+              https://github.com/maxgurewitz/basic-chat
+            </a>
+          </div>
+
           <button id = 'js-send-message' className = 'btn btn-default'> Send </button>
         </div>
       </div>

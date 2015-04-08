@@ -7,6 +7,7 @@ $row-height: $room-height/9;
 $message-list-padding: 19px;
 $font-size: 14px;
 $top-margin: 50px;
+$input-width: 80%;
 
 .loading {
   margin-left: auto;
@@ -45,7 +46,7 @@ h1 {
   min-height: $row-height;
   padding: $row-padding;
   font-size: $font-size;
-  line-height: $row-height/2;
+  line-height: $row-height/2 + $font-size;
   border-radius: 4px;
   word-break: break-word;
 
@@ -66,15 +67,32 @@ h1 {
   position: absolute;
   bottom: 0;
 
+  .info {
+    position: absolute;
+    left: $input-width - 5%;
+    top: 30%;
+    font-size: 20px;
+    text-decoration: none;
+    color: #999999;
+
+    &:hover {
+      color: #4c4c4c;
+    }
+  }
+
+  .info-content {
+    display: none;
+  }
+
   input {
     padding: $row-padding;
     height: 100%;
-    width: 80%;
+    width: $input-width;
   }
 
   button {
     margin-left: .5%;
     height: 100%;
-    width: 19.5%;
+    width: 99.5% - $input-width;
   }
 }

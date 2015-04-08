@@ -4935,7 +4935,7 @@ h1 {
   min-height: 55.55556px;
   padding: 10px;
   font-size: 14px;
-  line-height: 27.77778px;
+  line-height: 41.77778px;
   border-radius: 4px;
   word-break: break-word; }
   .message.dark {
@@ -4950,6 +4950,17 @@ h1 {
   width: 100%;
   position: absolute;
   bottom: 0; }
+  .message-input .info {
+    position: absolute;
+    left: 75%;
+    top: 30%;
+    font-size: 20px;
+    text-decoration: none;
+    color: #999999; }
+    .message-input .info:hover {
+      color: #4c4c4c; }
+  .message-input .info-content {
+    display: none; }
   .message-input input {
     padding: 10px;
     height: 100%;
