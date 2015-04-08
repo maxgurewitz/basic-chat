@@ -6,9 +6,15 @@ window.hl = require('highland');
 var React = require('react');
 var io = require('socket.io-client');
 
-var curseWords = ['fak', 'shet']
+var scrambledChars = ['*', '$', '#', '!', '%', '^'];
+
+var curseWords = ['fak', 'shet', 'kant', 'deeck', 'ash', 'clock', 'tats']
   .map(function (word) {
-    return new RegExp(word, 'g');
+    var scrambled = _.times(word.length, function () {
+      return _.sample(scrambledChars);
+    }).join('');
+
+    return { rgx: new RegExp(word, 'g'), scrambled: scrambled };
   });
 
 var ChatRoom = React.createClass({
@@ -91,8 +97,8 @@ function isNotBlank (msg) {
 }
 
 function symbolizeCurseWords (msg) {
-  var message = curseWords.reduce(function (filtered, rgx) {
-    return filtered.replace(rgx, '*$#!%^*');
+  var message = curseWords.reduce(function (filtered, curseWord) {
+    return filtered.replace(curseWord.rgx, curseWord.scrambled);
   }, msg.message);
 
   msg.message = message;
@@ -115,9 +121,7 @@ function animateMe (stream) {
 
     var imageStream = streamWithQueries
       .where({ isQuery: true })
-      .map(function (queryObj) {
-        return googleImages(queryObj);
-      })
+      .map(googleImages)
       .series()
       .map(function (results) {
         var result = _.sample(results);
