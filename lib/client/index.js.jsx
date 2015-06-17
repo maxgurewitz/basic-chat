@@ -21,7 +21,7 @@ var curseWords = ['fak', 'shet', 'kant', 'deeck', 'ash', 'clock', 'tats']
 var ChatRoom = React.createClass({
 
   getInitialState: function () {
-    return { messages: [] };
+    return { messages: [], input: "" };
   },
 
   componentDidMount: function () {
@@ -44,14 +44,14 @@ var ChatRoom = React.createClass({
       .merge()
       .throttle(300)
       .map(function () {
-        return { message: $('#js-message').val(), isMessage: true };
+        return { message: self.state.input, isMessage: true };
       })
       .filter(isNotBlank)
       .map(symbolizeCurseWords)
       .through(animateMe)
       .each(function (msg) {
         socket.emit('msg', msg);
-        $('#js-message').val('');
+        self.setState({ input: '' });
       });
 
     hl('msg', socket)
@@ -65,8 +65,8 @@ var ChatRoom = React.createClass({
   },
 
   render: function () {
-
-    var messages = this.state.messages.map(function (msg, i) {
+    var self = this;
+    var messages = self.state.messages.map(function (msg, i) {
       var className = 'message js-message' + (i % 2 === 0 ? ' dark' : ' light');
 
       if (msg.isImage) {
@@ -87,7 +87,13 @@ var ChatRoom = React.createClass({
           { messages }
         </div>
         <div className = 'message-input' >
-          <input className = 'well' type = 'text' id = 'js-message'>
+          <input 
+            className = 'well'
+            type = 'text' 
+            id = 'js-message' 
+            onChange = {function (e) { self.setState({input: e.target.value}); }}
+            value = {this.state.input}
+            >
           </input>
 
           <a tabindex = '0' role = 'button' className = 'js-info info' 
