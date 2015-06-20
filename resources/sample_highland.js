@@ -11,21 +11,26 @@ hl([1,2,3,4])
     //arr is [2,3,4,5]
   });
 
-// Streams can represent asynchronous operations, similar to promises.
+// Promises are equivalent to streams which can only be consumed once.
+// Promises can be converted to streams!
+
 var request = hl($.post('/api/foo'));
 
 // Streams can represent list of future events.
+
 var clicks = hl('click', htmlElement);
 
 // Higher order (nested) streams can be useful!
 // The following code would execute the contained requests in parallel
+
 hl([request1, request2, request3])
   .parallel()
   .toArray(function (arr) {
     //arr is [response1, response2, response3]
   });
 
-// Streams with generators can be used to represent infinite values
+// Streams with generators can be used to represent an infinite sequence of values
+
 var powersOfTwo = hl(function (push, next) {
   this.num = this.num ? this.num*2 : 2;
   push(null, this.num); 
