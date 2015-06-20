@@ -9,7 +9,7 @@ var io = require('socket.io-client');
 
 var scrambledChars = ['*', '$', '#', '!', '%', '^'];
 
-var curseWords = ['fak', 'shet', 'kant', 'deeck', 'ash', 'clock', 'tats']
+var curseWords = ['voldamort', 'yelp']
   .map(function (word) {
     var scrambled = _.times(word.length, function () {
       return _.sample(scrambledChars);
@@ -33,13 +33,14 @@ var ChatRoom = React.createClass({
     var socket = io();
     var self = this;
 
+    var clicks = hl('click', $('#js-send-message'));
+
     var enterPresses = hl('keypress', $('#js-message'))
       .filter(function (e) {
         return e.keyCode === 13;
       });
 
-    var clicks = hl('click', $('#js-send-message'));
-
+    // Outgoing messages.
     hl([enterPresses, clicks])
       .merge()
       .throttle(300)
@@ -54,6 +55,7 @@ var ChatRoom = React.createClass({
         self.setState({ input: '' });
       });
 
+    // Incoming messages.
     hl('msg', socket)
       .each(function (msg) {
         self.setState({ messages: self.state.messages.concat([msg]) });
@@ -79,6 +81,8 @@ var ChatRoom = React.createClass({
         return (<div className = { className } > { msg } </div>);
       }
     });
+
+    var githubLink = 'https://github.com/maxgurewitz/basic-chat';
 
     return (
       <div className='chat-room'>
@@ -111,9 +115,7 @@ var ChatRoom = React.createClass({
             </ul>
             Source:
             <br></br>
-            <a href = 'https://github.com/maxgurewitz/basic-chat'> 
-              https://github.com/maxgurewitz/basic-chat
-            </a>
+            <a href = { githubLink }> { githubLink }</a>
           </div>
 
           <button id = 'js-send-message' className = 'btn btn-default'> Send </button>
@@ -148,11 +150,13 @@ function msgAndQuery (msg, queryType, matchWord) {
 
 function animateMe (stream) {
 
+    // Map messages onto messages and queries.
     var streamWithQueries = stream.map(function (msg) {
       return msgAndQuery(msg, 'animated', 'animate') ||
         msgAndQuery(msg, 'image') || msg;
     }).flatten();
 
+    // Fork the query stream and map onto images.
     var imageStream = streamWithQueries
       .where({ isQuery: true })
       .map(googleImages)
@@ -172,6 +176,7 @@ function animateMe (stream) {
     return hl([messageStream, imageStream]).merge();
 }
 
+// Query to image.
 function googleImages (query) {
 
   var params = {
@@ -206,3 +211,23 @@ window.simulateFastTyper = function (times) {
     $('#js-send-message').click();
   });
 };
+
+    // var enterPresses = hl('keypress', $('#js-message'))
+    //   .filter(function (e) {
+    //     return e.keyCode === 13;
+    //   });
+
+    // hl([enterPresses, clicks])
+    //   .merge()
+    //   .throttle(300)
+    //   .map(function () {
+    //     return { message: self.state.input, isMessage: true };
+    //   })
+    //   .filter(isNotBlank)
+    //   .map(symbolizeCurseWords)
+    //   .through(animateMe)
+    //   .each(function (msg) {
+    //     socket.emit('msg', msg);
+    //     self.setState({ input: '' });
+    //   });
+
